@@ -57,8 +57,9 @@ class User(db.Model, ResourceAddUpdateDelete):
         self.password_hash = password_context.hash(password)
         return '', True
 
-    def __init__(self, name):
+    def __init__(self, name,email):
         self.name = name
+        self.email = email
 
 
 
