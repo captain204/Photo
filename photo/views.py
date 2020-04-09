@@ -1,12 +1,12 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_restful import Api, Resource
 from http_status import HttpStatus
-from models import db,Photo,PhotoSchema,PhotoCategory,PhotoCategorySchema
+from models import db,Photo,PhotoSchema,PhotoCategory,PhotoCategorySchema, User, UserSchema
 from sqlalchemy.exc import SQLAlchemyError
 from helpers import PaginationHelper
 from flask_httpauth import HTTPBasicAuth
 from flask import g
-from models import User, UserSchema
+
 
 auth = HTTPBasicAuth()
 
@@ -14,6 +14,10 @@ auth = HTTPBasicAuth()
 
 photo_blueprint = Blueprint('photo', __name__)
 user_schema = UserSchema()
+photo_schema = PhotoSchema()
+photo_category_schema = PhotoCategorySchema()
+
+
 photo = Api(photo_blueprint)
 
 @auth.verify_password
@@ -93,27 +97,23 @@ class PhotoResource(AuthenticationRequiredResource):
         return dumped_photo
 
     def patch(self,id):
+    
         photo = Photo.query.get_or_404(id)
-        photo_dict = request,get_json(force=True)
+        photo_dict = request.get_json(force=True)
         print(photo_dict)
         if 'link' in photo_dict and photo_dict['link'] is not None:
             photo_link = photo_dict['link']
             #Check if image link exist in database  already
-            if not Photo.is_message_unique(id = 0, link = photo_link):
+            if not Photo.is_link_unique(id = 0, link = photo_link):
                 response = {'error':'An image with this link{} already exist'.format(photo_link)}
                 return response, HttpStatus.bad_request_400.value
             photo.link = photo_link
-        if 'description' in photo_dict and photo['description'] is not None:
-            photo.description = photo['description']
-        dumped_photo, dump_errors = photo_schema(photo)
-        if dump_errors:
-            return dump_errors, HttpStatus.bad_request_400.value
-        validate_errors = photo_schema.validate(dumped_photo)
-        if validate_errors:
-            return validate_errors, HttpStatus.bad_request_400.value
+        if 'description' in photo_dict and photo_dict['description'] is not None:
+            photo.description = photo_dict['description']
         try:
             photo.update()
-            return self.get(id)
+            response = {'update':'Update successfull'}
+            return response, HttpStatus.ok_200.value
         except SQLAlchemyError as e:
             db.session.rollback()
             response = {"error":str(e)}
@@ -134,10 +134,16 @@ class PhotoResource(AuthenticationRequiredResource):
 #Collection of resources
 class PhotoListResource(AuthenticationRequiredResource):
     def get(self):
-        pagination_helper = PaginationHelper(request,query=photo.query,
-                                    schema=photo_schema)
-        pagination_result = pagination_helper.paginate_query()
-        return pagination_result
+        pagination_helper = PaginationHelper(
+            request,
+            query=Photo.query,
+            resource_for_url='photo.photolistresource',
+            key_name='results',
+            schema=photo_schema)
+        result = pagination_helper.paginate_query()
+        return result
+
+
 
     def post(self):
         photo_collection = request.get_json()
@@ -149,22 +155,22 @@ class PhotoListResource(AuthenticationRequiredResource):
         if errors:
             return errors, HttpStatus.bad_request_400.value
         photo_link = photo_collection['link']
-        if not Photo.is_link_unique(id=0,message=photo_link):
+        if not Photo.is_link_unique(id=0,link=photo_link):
             response = {'error':'Photo already exist'.format(photo_link)}
             return response, HttpStatus.bad_request_400.value
         try:
             #check if photo category exist
             #Retreive photo category name from collection
             photo_category_name = photo_collection['photo_category']['name']
-            photo_category = PhotoCategory.query.filter_by(name=photo_category_name).first
-            if photo_category is None:
-                photo_category = PhotoCategory(name=photo_category_name)
-                db.session.add(photo_category)
+            category = PhotoCategory.query.filter_by(name=photo_category_name).first()
+            if category is None:
+                category = PhotoCategory(name=photo_category_name)
+                db.session.add(category)
             # Add new photo
             photo=Photo(
                     link = photo_collection['link'],
                     description = photo_collection['description'],
-                    photo_category = photo_collection['category']
+                    photo_category = category
                 )
             photo.add(photo)
             query = Photo.query.get(photo.id)
@@ -185,26 +191,28 @@ class PhotoCategoryResource(AuthenticationRequiredResource):
 
     def patch(self,id):
         photo_category = PhotoCategory.query.get_or_404(id)
-        photo_category_collection = request.get_json
+        photo_category_collection = request.get_json()
         if not photo_category_collection:
             response = {'message':'Enter photo category'}
             return response, HttpStatus.bad_request_400.value
         errors = photo_category_schema.validate(photo_category_collection)
         if errors:
             return errors, HttpStatus.bad_request_400.value
-        photo_category_name = photo_category_collection['name']
-        if not PhotoCategory.is_name_unique(id=0,name=photo_category_name):
-            response = {'error':'Category already exist'.format(photo_category_name)}
-            return response, HttpStatus.bad_request_400.value
+        #photo_category_name = photo_category_collection['name']
         try:
             if 'name' in photo_category_collection and photo_category_collection['name'] is not None:
                 photo_category.name = photo_category_collection['name']
+            if not PhotoCategory.is_name_exist(id=id,name=photo_category.name):
+                response = {'error':'Category already exist'.format(photo_category.name)}
+                return response, HttpStatus.bad_request_400.value        
             photo_category.update()
+            response = {'update':'Update successfull'}
+            return response, HttpStatus.ok_200.value
         except SQLAlchemyError as e:
             db.session.rollback()
             response = {'error':str(e)}
             return response, HttpStatus.bad_request_400.value
-
+            
     def delete(self,id):
         photo_category = PhotoCategory.query.get_or_404(id)
         try:
@@ -233,13 +241,13 @@ class PhotoCategoryListResource(AuthenticationRequiredResource):
         photo_category_name = photo_category_collection['name'] 
         #Check if category name already exist
         if not PhotoCategory.is_name_unique(id=0,name=photo_category_name):
-            response = {'error':'A photo category with name{} already exist'.format(photo_category_name)}
+            response = {'error':'A photo category with name {} already exist'.format(photo_category_name)}
             return response, HttpStatus.bad_request_400.value
         try:
             photo_category = PhotoCategory(photo_category_collection['name'])
             photo_category.add(photo_category) 
             query = PhotoCategory.query.get(photo_category.id)
-            dump_result = photo_category_schems.dump(query)
+            dump_result = photo_category_schema.dump(query)
             return dump_result, HttpStatus.created_201.value
         except SQLAlchemyError as e:
             db.session.rollback()
@@ -251,6 +259,6 @@ class PhotoCategoryListResource(AuthenticationRequiredResource):
 photo.add_resource(PhotoCategoryListResource,'/photo_category/')
 photo.add_resource(PhotoCategoryResource,'/photo_category/<int:id>')
 photo.add_resource(PhotoListResource,'/photos/')
-photo.add_resource(PhotoResource,'/photo/<int:id>')
+photo.add_resource(PhotoResource,'/photos/<int:id>')
 photo.add_resource(UserListResource, '/users/')
 photo.add_resource(UserResource, '/users/<int:id>')
