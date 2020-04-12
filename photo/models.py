@@ -141,7 +141,7 @@ class PhotoSchema(ma.Schema):
     photo_category = fields.Nested(PhotoCategorySchema, 
         only=['id', 'url', 'name'], 
         required=True)
-    url = ma.URLFor('photo.photolistresource',id='<id>',_external=True)
+    url = ma.URLFor('photo.photoresource',id='<id>',_external=True)
     
 
     @pre_load

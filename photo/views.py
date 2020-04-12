@@ -142,9 +142,7 @@ class PhotoListResource(AuthenticationRequiredResource):
             schema=photo_schema)
         result = pagination_helper.paginate_query()
         return result
-
-
-
+        
     def post(self):
         photo_collection = request.get_json()
         #check if photo Collection is empty
@@ -240,7 +238,7 @@ class PhotoCategoryListResource(AuthenticationRequiredResource):
             return errors, HttpStatus.bad_request_400.value
         photo_category_name = photo_category_collection['name'] 
         #Check if category name already exist
-        if not PhotoCategory.is_name_unique(id=0,name=photo_category_name):
+        if  PhotoCategory.is_name_exist(id=id,name=photo_category_name):
             response = {'error':'A photo category with name {} already exist'.format(photo_category_name)}
             return response, HttpStatus.bad_request_400.value
         try:
