@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_restful import Api, Resource
-from http_status import HttpStatus
-from models import db,Photo,PhotoSchema,PhotoCategory,PhotoCategorySchema, User, UserSchema
+from photo.http_status import HttpStatus
+from photo.models import db,Photo,PhotoSchema,PhotoCategory,PhotoCategorySchema, User, UserSchema
 from sqlalchemy.exc import SQLAlchemyError
-from helpers import PaginationHelper
+from photo.helpers import PaginationHelper
 from flask_httpauth import HTTPBasicAuth
 from flask import g
 

@@ -1,1 +1,1 @@
-web: gunicorn photo.app:app
+web: gunicorn wsgi:app
