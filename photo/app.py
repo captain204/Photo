@@ -6,18 +6,16 @@ from photo.views import photo_blueprint
 
 
 
-def create_app(settings_override=None):
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object('app.config')
-    app.config.from_pyfile('config.py', silent=True)
-    if settings_override:
-        app.config.update(settings_override)
 
-    db.init_app(app)
-    app.register_blueprint(photo_blueprint, url_prefix='/photo')
-    migrate = Migrate(app, db)
+def create_app(config_filename):
+    app = Flask(__name__)
+    app.config.from_object(config_filename)
+    orm.init_app(app)
+    app.register_blueprint(service_blueprint, url_prefix='/photo')
+    migrate = Migrate(app, orm)
     return app
 
 
-app = create_app('app.config')
+app = create_app('config')
+
 
