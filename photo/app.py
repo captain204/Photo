@@ -6,7 +6,6 @@ from photo.views import photo_blueprint
 
 
 
-
 def create_app(settings_override=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object('config')
