@@ -10,9 +10,9 @@ from photo.views import photo_blueprint
 def create_app(config_filename):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_filename)
-    orm.init_app(app)
+    db.init_app(app)
     app.register_blueprint(service_blueprint, url_prefix='/photo')
-    migrate = Migrate(app, orm)
+    migrate = Migrate(app, db)
     return app
 
 
