@@ -1,4 +1,4 @@
-web: gunicorn --bind 0.0.0.0:$PORT photo.app:app
+web: gunicorn --bind 0.0.0.0:$PORT wsgi:app
 
 
 
