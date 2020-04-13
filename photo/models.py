@@ -2,13 +2,12 @@ from marshmallow import Schema, fields, pre_load
 from marshmallow import validate
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from flask_heroku import Heroku
 from passlib.apps import custom_app_context as password_context
 import re
 
 
 
-heroku = Heroku(app)
+
 
 db = SQLAlchemy()
 ma = Marshmallow()
