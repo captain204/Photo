@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_heroku import Heroku
+#from flask_heroku import Heroku
 from photo.models import db
 from photo.views import photo_blueprint
 
@@ -14,7 +14,7 @@ def create_app(config_filename):
     db.init_app(app)
     app.register_blueprint(photo_blueprint, url_prefix='/photo')
     migrate = Migrate(app, db)
-    heroku = Heroku(app)
+    #heroku = Heroku(app)
     return app
 
 
