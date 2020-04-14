@@ -128,6 +128,19 @@ class PhotoCategorySchema(ma.Schema):
         exclude=('photo_category',))
 
 
+class PhotoCategoryView(SwaggerView):
+    parameters = [
+        {
+            "name": "category name",
+        }
+    ]
+    responses = {
+        200: {
+            "description": "A list of photo categories",
+            "schema":PhotoCategorySchema 
+        }
+    }
+
 
 
 
