@@ -9,8 +9,8 @@ from flask import g
 
 
 
-auth = HTTPBasicAuth()
 
+auth = HTTPBasicAuth()
 
 
 photo_blueprint = Blueprint('photo', __name__)
