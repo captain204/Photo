@@ -7,9 +7,28 @@ from photo.views import photo_blueprint
 from flasgger import Swagger
 
 
-
-
-
+template = {
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "API for my data",
+    "contact": {
+      "responsibleOrganization": "ME",
+      "responsibleDeveloper": "Me",
+      "email": "me@me.com",
+      "url": "www.me.com",
+    },
+    "termsOfService": "http://me.com/terms",
+    "version": "0.0.1"
+  },
+  "host": "mysite.com",  # overrides localhost:500
+  "basePath": "/api",  # base bash for blueprint registration
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "operationId": "getmyData"
+}
 
 
 
@@ -20,7 +39,7 @@ def create_app(config_filename):
     app.register_blueprint(photo_blueprint, url_prefix='/photo')
     migrate = Migrate(app, db)
     #heroku = Heroku(app)
-    swagger = Swagger(app)
+    swagger = Swagger(app,template=template)
     return app
 
 
