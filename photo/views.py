@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response
-from flask_restful import Api, Resource
+from flask_restful import Api,Resource
 from photo.http_status import HttpStatus
 from photo.models import db,Photo,PhotoSchema,PhotoCategory,PhotoCategorySchema, User, UserSchema
 from sqlalchemy.exc import SQLAlchemyError
