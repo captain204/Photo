@@ -82,7 +82,7 @@ class UserListResource(Resource):
                 schema:
                     type: array
                     items:
-                    $ref: '#/components/schemas/User'           
+                        $ref: '#/components/schemas/User'           
         """
         pagination_helper = PaginationHelper(
             request,
@@ -203,7 +203,7 @@ class PhotoListResource(AuthenticationRequiredResource):
                 schema:
                     type: array
                     items:
-                    $ref:'#/components/schemas/Photo'           
+                        $ref:'#/components/schemas/Photo'           
         """
         pagination_helper = PaginationHelper(
             request,
@@ -329,7 +329,8 @@ class PhotoCategoryListResource(AuthenticationRequiredResource):
                 schema:
                     type: array
                     items:
-                    $ref:'#/components/schemas/Category'           
+                        $ref: '#/components/schemas/Category' 
+                                      
         """
         photo_categories = PhotoCategory.query.all()
         dump_results = photo_category_schema.dump(photo_categories,many=True)
