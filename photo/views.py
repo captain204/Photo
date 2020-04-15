@@ -78,6 +78,30 @@ class UserListResource(Resource):
         return result
 
     def post(self):
+        """
+        post endpoint
+        ---
+        tags:
+        - products
+        parameters:
+        - name: body
+            in: body
+            required: true
+            schema:
+            id: Product
+            required:
+                - name
+            properties:
+                name:
+                type: string
+                description: The product's name.
+                default: "Guarana"
+        responses:
+        200:
+            description: The product inserted in the database
+            schema:
+            $ref: '#/definitions/Product'
+        """
         user_dict = request.get_json()
         if not user_dict:
             response = {'user': 'No input data provided'}
