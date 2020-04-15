@@ -68,6 +68,9 @@ class UserResource(AuthenticationRequiredResource):
 class UserListResource(Resource):
     @auth.login_required
     def get(self):
+        """
+            Endpoint returns a list of users.This endpoint requires authentication
+        """
         pagination_helper = PaginationHelper(
             request,
             query=User.query,
@@ -223,7 +226,7 @@ class PhotoListResource(AuthenticationRequiredResource):
 class PhotoCategoryResource(AuthenticationRequiredResource):
     def get(self,id):
         """
-        Getting a single photo categoru resource requires authentication
+        Getting a single photo category resource requires authentication
        ---
        parameters:
          - in: path
