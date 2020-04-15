@@ -82,7 +82,7 @@ class UserListResource(Resource):
         post endpoint
         ---
         tags:
-        - products
+        - users
         parameters:
         - name: body
             in: body
@@ -94,13 +94,19 @@ class UserListResource(Resource):
             properties:
                 name:
                 type: string
-                description: The product's name.
-                default: "Guarana"
+                description: The user name.
+                default: "Amaka"
+                email:string
+                description: The user email.
+                default: "Amaka22"
+                password:string
+                description: The users password.
+                default: "Te4%288pass1"
         responses:
         200:
-            description: The product inserted in the database
+            description: The User inserted in the database
             schema:
-            $ref: '#/definitions/Product'
+            $ref: '#/photo/User'
         """
         user_dict = request.get_json()
         if not user_dict:
