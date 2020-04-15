@@ -40,7 +40,7 @@ class AuthenticationRequiredResource(Resource):
 class UserResource(AuthenticationRequiredResource):
     def get(self, id):
         """
-       This examples uses FlaskRESTful Resource
+        Getting a single user resource requires authentication
        ---
        parameters:
          - in: path
@@ -112,6 +112,25 @@ class UserListResource(Resource):
 
 class PhotoResource(AuthenticationRequiredResource):
     def get(self,id):
+        """
+        Getting a single photo resource requires authentication
+       ---
+       parameters:
+         - in: path
+           id: id
+           type: integer
+           required: true
+       responses:
+         200:
+           description: A single photo item
+           schema:
+             id: Photo
+             properties:
+               id:
+                 type: integer
+                 description: The id of the photo
+                 default: 1
+        """
         photo = Photo.query.get_or_404(id)
         dumped_photo = photo_schema.dump(photo)
         return dumped_photo
@@ -203,6 +222,25 @@ class PhotoListResource(AuthenticationRequiredResource):
 #Single photo resource
 class PhotoCategoryResource(AuthenticationRequiredResource):
     def get(self,id):
+        """
+        Getting a single photo categoru resource requires authentication
+       ---
+       parameters:
+         - in: path
+           id: id
+           type: integer
+           required: true
+       responses:
+         200:
+           description: A single photo item
+           schema:
+             id: Photo
+             properties:
+               id:
+                 type: integer
+                 description: The id of the photo category
+                 default: 1
+        """
         photo_category = PhotoCategory.query.get_or_404(id)
         dump_result = photo_category_schema.dump(photo_category)
         return dump_result

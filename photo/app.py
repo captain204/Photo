@@ -22,7 +22,7 @@ template = {
     "version": "0.0.1"
   },
   "host": "favouritephotoapi.herokuapp.com",  # overrides localhost:500
-  "basePath": "favouritephotoapi.herokuapp.com/photo/",  # base bash for blueprint registration
+  "basePath": "/photo/",  # base bash for blueprint registration
   "schemes": [
     "http",
     "https"
