@@ -88,9 +88,11 @@ class UserListResource(Resource):
             in: body
             required: true
             schema:
-            id: Product
+            id: User
             required:
                 - name
+                -email
+                -password
             properties:
                 name:
                 type: string
