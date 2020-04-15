@@ -40,23 +40,23 @@ class AuthenticationRequiredResource(Resource):
 class UserResource(AuthenticationRequiredResource):
     def get(self, id):
         """
-        Getting a single user resource requires authentication
-       ---
-       parameters:
-         - in: path
-           id: id
-           type: integer
-           required: true
-       responses:
-         200:
-           description: A single user item
-           schema:
-             id: User
-             properties:
-               id:
-                 type: integer
-                 description: The id of the user
-                 default: 1
+            Getting a single user resource requires authentication
+        ---
+        parameters:
+            - in: path
+            id: id
+            type: integer
+            required: true
+        responses:
+            200:
+            description: A single user item
+            schema:
+                id: User
+                properties:
+                id:
+                    type: integer
+                    description: The id of the user
+                    default: 1
         """
         user = User.query.get_or_404(id)
         result = user_schema.dump(user)
@@ -130,22 +130,22 @@ class PhotoResource(AuthenticationRequiredResource):
     def get(self,id):
         """
         Getting a single photo resource requires authentication
-       ---
-       parameters:
-         - in: path
-           id: id
-           type: integer
-           required: true
-       responses:
-         200:
-           description: A single photo item
-           schema:
-             id: Photo
-             properties:
-               id:
-                 type: integer
-                 description: The id of the photo
-                 default: 1
+        ---
+        parameters:
+            - in: path
+            id: id
+            type: integer
+            required: true
+        responses:
+            200:
+            description: A single photo item
+            schema:
+                id: Photo
+                properties:
+                id:
+                    type: integer
+                    description: The id of the photo
+                    default: 1
         """
         photo = Photo.query.get_or_404(id)
         dumped_photo = photo_schema.dump(photo)
@@ -203,7 +203,7 @@ class PhotoListResource(AuthenticationRequiredResource):
                 schema:
                     type: array
                     items:
-                    $ref: '#/components/schemas/Photo'           
+                    $ref:'#/components/schemas/Photo'           
         """
         pagination_helper = PaginationHelper(
             request,
@@ -255,23 +255,23 @@ class PhotoListResource(AuthenticationRequiredResource):
 class PhotoCategoryResource(AuthenticationRequiredResource):
     def get(self,id):
         """
-        Getting a single photo category resource requires authentication
-       ---
-       parameters:
-         - in: path
-           id: id
-           type: integer
-           required: true
-       responses:
-         200:
-           description: A single photo item
-           schema:
-             id: Photo
-             properties:
-               id:
-                 type: integer
-                 description: The id of the photo category
-                 default: 1
+            Getting a single photo category resource requires authentication
+        ---
+        parameters:
+            - in: path
+            id: id
+            type: integer
+            required: true
+        responses:
+            200:
+            description: A single photo item
+            schema:
+                id: Photo
+                properties:
+                id:
+                    type: integer
+                    description: The id of the photo category
+                    default: 1
         """
         photo_category = PhotoCategory.query.get_or_404(id)
         dump_result = photo_category_schema.dump(photo_category)
@@ -329,7 +329,7 @@ class PhotoCategoryListResource(AuthenticationRequiredResource):
                 schema:
                     type: array
                     items:
-                    $ref: '#/components/schemas/Category'           
+                    $ref:'#/components/schemas/Category'           
         """
 
         photo_categories = PhotoCategory.query.all()
