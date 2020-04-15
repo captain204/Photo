@@ -37,15 +37,7 @@ template= {
             },
             "photo_category":{
               "type":"string"
-            }
-            
-          }
-        },
-        "Category":{
-          "properties":{
-            "name":{
-              "type":"string"
-            }
+            }   
           }
         }
       }

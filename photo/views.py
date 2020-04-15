@@ -315,23 +315,6 @@ class PhotoCategoryResource(AuthenticationRequiredResource):
 #Collection of photoCategorry resource
 class PhotoCategoryListResource(AuthenticationRequiredResource):
     def get(self):
-        """
-        Get all categories
-        ---
-        description: Get all categories.
-        tags:
-            - categories
-        responses:
-            200:
-            description: List of all categories.
-            content:
-                application/json:
-                schema:
-                    type: array
-                    items:
-                    $ref:'#/components/schemas/Category'           
-        """
-
         photo_categories = PhotoCategory.query.all()
         dump_results = photo_category_schema.dump(photo_categories,many=True)
         return dump_results
