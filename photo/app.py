@@ -14,7 +14,7 @@ template = {
     "description": "API for saving links to favourite user photos",
     "contact": {
       "responsibleOrganization": "ME",
-      "responsibleDeveloper": "ME",
+      "responsibleDeveloper": "Me",
       "email": "nurudeenakindele8@gmail.com",
       "url": "www.me.com",
     },

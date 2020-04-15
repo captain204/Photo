@@ -108,7 +108,7 @@ class UserListResource(Resource):
         200:
             description: The User inserted in the database
             schema:
-            $ref: '#/photo/User'
+            $ref: '#/photo/users'
         """
         user_dict = request.get_json()
         if not user_dict:
