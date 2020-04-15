@@ -68,6 +68,9 @@ class UserListResource(Resource):
       """
         This examples uses FlaskRESTful Resource
        ---
+       parameters:
+         - in: path
+           
       responses:
          200:
            description: A Collection of users
@@ -81,12 +84,6 @@ class UserListResource(Resource):
                     type:string
                     description:name of user                   
         """
-
-
-
-
-
-
         pagination_helper = PaginationHelper(
             request,
             query=User.query,
