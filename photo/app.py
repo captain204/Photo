@@ -48,9 +48,9 @@ template= {
             },
             "password": {
               "type": "string"
-            },
+            }
           }
-        },
+        }
         "Photo":{
           "properties":{
             "link":{
@@ -64,18 +64,18 @@ template= {
             }
             
           }
-        },
+        }
         "Category":{
           "properties":{
             "name":{
               "type":"string"
-            },
+            }
           }
         }
       }
     }
   }
-
+)
 
 def create_app(config_filename):
     app = Flask(__name__, instance_relative_config=True)
