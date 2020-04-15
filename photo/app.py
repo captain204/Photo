@@ -26,7 +26,7 @@ template= {
               "type": "string"
             }
           }
-        }
+        },
         "Photo":{
           "properties":{
             "link":{
@@ -40,7 +40,7 @@ template= {
             }
             
           }
-        }
+        },
         "Category":{
           "properties":{
             "name":{
