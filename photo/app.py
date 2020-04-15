@@ -10,19 +10,19 @@ from flasgger import Swagger
 template = {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "API for my data",
+    "title": "Photo API",
+    "description": "API for saving links to favourite user photos",
     "contact": {
       "responsibleOrganization": "ME",
-      "responsibleDeveloper": "Me",
-      "email": "me@me.com",
+      "responsibleDeveloper": "ME",
+      "email": "nurudeenakindele8@gmail.com",
       "url": "www.me.com",
     },
     "termsOfService": "http://me.com/terms",
     "version": "0.0.1"
   },
-  "host": "mysite.com",  # overrides localhost:500
-  "basePath": "/api",  # base bash for blueprint registration
+  "host": "favouritephotoapi.herokuapp.com",  # overrides localhost:500
+  "basePath": "favouritephotoapi.herokuapp.com/photo/",  # base bash for blueprint registration
   "schemes": [
     "http",
     "https"

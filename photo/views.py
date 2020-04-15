@@ -39,24 +39,13 @@ class AuthenticationRequiredResource(Resource):
 
 class UserResource(AuthenticationRequiredResource):
     def get(self, id):
-        user = User.query.get_or_404(id)
-        result = user_schema.dump(user)
-        return result
-
-
-
-
-class UserListResource(Resource):
-    @auth.login_required
-    def get(self):
-        """
+       """
        This examples uses FlaskRESTful Resource
-       It works also with swag_from, schemas and spec_dict
        ---
        parameters:
          - in: path
-           name: username
-           type: string
+           id: id
+           type: integer
            required: true
        responses:
          200:
@@ -64,11 +53,40 @@ class UserListResource(Resource):
            schema:
              id: User
              properties:
-               username:
-                 type: string
-                 description: The name of the user
-                 default: Steven Wilson
+               id:
+                 type: integer
+                 description: The id of the user
         """
+        user = User.query.get_or_404(id)
+        result = user_schema.dump(user)
+        return result
+
+
+class UserListResource(Resource):
+    @auth.login_required
+    def get(self):
+      """
+        This examples uses FlaskRESTful Resource
+       ---
+      responses:
+         200:
+           description: A Collection of users
+           schema:
+             id: User
+             properties:
+               id:
+                 type: integer
+                 description: The id of the user
+               name:
+                    type:string
+                    description:name of user                   
+        """
+
+
+
+
+
+
         pagination_helper = PaginationHelper(
             request,
             query=User.query,
