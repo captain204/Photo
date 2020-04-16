@@ -218,29 +218,7 @@ class PhotoListResource(AuthenticationRequiredResource):
 #Single photo resource
 class PhotoCategoryResource(AuthenticationRequiredResource):
     def get(self,id):
-        """
-        Get the category with the id provided.
-        ---
-        description: >
-            Get the category with the id provided by 
-            getting it using the **id** parameter provided!
-        tags:
-            - category
-        parameters:
-            - id: id
-            in: path
-            description: Id of the category
-            required: true
-            schema:
-                type: integer
-        responses:
-            200:
-            description: A category.
-            content:
-                application/json:
-                schema:
-                    $ref: '#/components/schemas/Category'
-        """
+        
         photo_category = PhotoCategory.query.get_or_404(id)
         dump_result = photo_category_schema.dump(photo_category)
         return dump_result
