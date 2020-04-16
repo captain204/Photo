@@ -50,22 +50,7 @@ class UserResource(AuthenticationRequiredResource):
 class UserListResource(Resource):
     @auth.login_required
     def get(self):
-        """
-        Get all users
-        ---
-        description: Get all users.
-        tags:
-            - users
-        responses:
-            200:
-            description: List of all users.
-            content:
-                application/json:
-                schema:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/User'           
-        """
+        
         pagination_helper = PaginationHelper(
             request,
             query=User.query,
@@ -153,22 +138,7 @@ class PhotoResource(AuthenticationRequiredResource):
 #Collection of resources
 class PhotoListResource(AuthenticationRequiredResource):
     def get(self):
-        """
-        Get all photos
-        ---
-        description: Get all photos.
-        tags:
-            - photos
-        responses:
-            200:
-            description: List of all photos.
-            content:
-                application/json:
-                schema:
-                    type: array
-                    items:
-                        $ref:'#/components/schemas/Photo'           
-        """
+        
         pagination_helper = PaginationHelper(
             request,
             query=Photo.query,
@@ -261,23 +231,6 @@ class PhotoCategoryResource(AuthenticationRequiredResource):
 #Collection of photoCategorry resource
 class PhotoCategoryListResource(AuthenticationRequiredResource):
     def get(self):
-        """
-        Get all categories
-        ---
-        description: Get all categories.
-        tags:
-            - categories
-        responses:
-            200:
-            description: List of all categories.
-            content:
-                application/json:
-                schema:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Category' 
-                                      
-        """
         photo_categories = PhotoCategory.query.all()
         dump_results = photo_category_schema.dump(photo_categories,many=True)
         return dump_results
