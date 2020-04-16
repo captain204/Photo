@@ -39,6 +39,22 @@ class AuthenticationRequiredResource(Resource):
 
 class UserResource(AuthenticationRequiredResource):
     def get(self, id):
+        """
+        Get all users
+        ---
+        description: Get all users.
+        tags:
+            - users
+        responses:
+            200:
+            description: List of all users.
+            content:
+                application/json:
+                schema:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/User'           
+        """
        
         user = User.query.get_or_404(id)
         result = user_schema.dump(user)
@@ -231,23 +247,7 @@ class PhotoCategoryResource(AuthenticationRequiredResource):
 #Collection of photoCategorry resource
 class PhotoCategoryListResource(AuthenticationRequiredResource):
     def get(self):
-        """
-        Get all categories
-        ---
-        description: Get all categories.
-        tags:
-            - categories
-        responses:
-            200:
-            description: List of all categories.
-            content:
-                application/json:
-                schema:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Category' 
-                                      
-        """
+        
         photo_categories = PhotoCategory.query.all()
         dump_results = photo_category_schema.dump(photo_categories,many=True)
         return dump_results
