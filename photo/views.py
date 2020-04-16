@@ -40,20 +40,24 @@ class AuthenticationRequiredResource(Resource):
 class UserResource(AuthenticationRequiredResource):
     def get(self, id):
         """
-        Get all users
-        ---
-        description: Get all users.
-        tags:
-            - users
-        responses:
-            200:
-            description: List of all users.
-            content:
-                application/json:
-                schema:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/User'           
+        Get user by id requires authentication
+
+       ---
+       parameters:
+         - in: path
+           id: username
+           type: integer
+           required: true
+       responses:
+         200:
+           description: A single user item
+           schema:
+             id: User
+             properties:
+               username:
+                 type: string
+                 description: The name of the user
+                 default: captain
         """
        
         user = User.query.get_or_404(id)
