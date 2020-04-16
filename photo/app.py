@@ -5,52 +5,29 @@ from flask_migrate import Migrate
 from photo.models import db
 from photo.views import photo_blueprint
 from flasgger import Swagger
-template= {
-    "swagger": "3.0",
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Photo App",
-        "version": "0.0.1",
-    },
-    "components": {
-      "schemas": {
-        "User": {
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "email": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
-            }
-          }
-        },
-        "Photo":{
-          "properties":{
-            "link":{
-              "type":"string"
-            },
-            "description":{
-              "type":"string"
-            },
-            "photo_category":{
-              "type":"string"
-            }
-          }
-        },
-        "Category":{
-          "properties":{
-            "name":{
-              "type":"string"
-            }
-          }
-        }
-      }
-    }
-  }
 
+template = {
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "API for my data",
+    "contact": {
+      "responsibleOrganization": "ME",
+      "responsibleDeveloper": "Me",
+      "email": "me@me.com",
+      "url": "www.me.com",
+    },
+    "termsOfService": "http://me.com/terms",
+    "version": "0.0.1"
+  },
+  "host": "mysite.com",  # overrides localhost:500
+  "basePath": "/api",  # base bash for blueprint registration
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "operationId": "getmyData"
+}
 
 def create_app(config_filename):
     app = Flask(__name__, instance_relative_config=True)
