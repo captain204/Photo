@@ -80,7 +80,31 @@ class UserListResource(Resource):
         result = pagination_helper.paginate_query()
         return result
 
-    def post(self):        
+    def post(self):
+        """
+        Register user endpoint
+        ---
+        tags:
+        - users
+        parameters:
+        - name: body
+            in: body
+            required: true
+            schema:
+            id: User
+            required:
+                - name
+            properties:
+                name:
+                type: string
+                description: The user's name.
+                default: "Captain"
+        responses:
+        200:
+            description: The user inserted in the database
+            schema:
+            $ref: '#/definitions/User'
+        """        
         user_dict = request.get_json()
         if not user_dict:
             response = {'user': 'No input data provided'}

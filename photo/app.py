@@ -20,8 +20,8 @@ template = {
     "termsOfService": "http://me.com/terms",
     "version": "0.0.1"
   },
-  "host": "mysite.com",  # overrides localhost:500
-  "basePath": "/api",  # base bash for blueprint registration
+  "host": "https://favouritephotoapi.herokuapp.com/apidocs/",  # overrides localhost:500
+  "basePath": "/photo",  # base bash for blueprint registration
   "schemes": [
     "http",
     "https"
