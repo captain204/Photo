@@ -14,6 +14,8 @@ db = SQLAlchemy()
 ma = Marshmallow()
 
 
+
+
 class ResourceAddUpdateDelete():   
     def add(self, resource):
         db.session.add(resource)
@@ -34,7 +36,7 @@ class User(db.Model, ResourceAddUpdateDelete):
     email = db.Column(db.String(250), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
     creation_date = db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp(), nullable=False)
-
+    
     def verify_password(self, password):
         return password_context.verify(password, self.password_hash)
 
@@ -74,8 +76,11 @@ class UserSchema(ma.Schema):
     url = ma.URLFor('photo.userresource',id='<id>',_external=True)
 
 
+
+
+
+
 class Photo(db.Model,ResourceAddUpdateDelete):
-    
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.String(250),unique=True, nullable=False)
     description = db.Column(db.String(250), nullable=False)
